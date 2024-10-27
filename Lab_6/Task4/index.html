@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Task4</title>
+</head>
+<body>
+    <div class="block">
+        <div class="block-buttons">
+            <button class="delete-btn">❌</button>
+            <button class="edit-btn">✏️</button>
+        </div>
+        <div class="block-content">
+            <p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry.</p>
+        </div>
+    </div>
+    
+    <div class="block">
+        <div class="block-buttons">
+            <button class="delete-btn">❌</button>
+            <button class="edit-btn">✏️</button>
+        </div>
+        <div class="block-content">
+            <p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry.</p>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="block-buttons">
+            <button class="delete-btn">❌</button>
+            <button class="edit-btn">✏️</button>
+        </div>
+        <div class="block-content">
+            <p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry.</p>
+        </div>
+    </div>
+    
+    <script>
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('.block').remove();
+            });
+        });
+    
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const block = this.closest('.block');
+                const contentDiv = block.querySelector('.block-content');
+                const originalText = contentDiv.innerHTML;
+    
+                const textarea = document.createElement('textarea');
+                textarea.value = contentDiv.textContent.trim();
+                contentDiv.innerHTML = '';
+                contentDiv.appendChild(textarea);
+    
+                textarea.addEventListener('blur', function() {
+                    contentDiv.innerHTML = `<p>${textarea.value}</p>`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

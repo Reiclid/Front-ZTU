@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Task1</title>
+</head>
+<body>
+    <div id="container">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+    </div>
+    
+    <script>
+        const container = document.getElementById('container');
+        let activeSquare = null;
+        let offsetX = 0, offsetY = 0;
+    
+        document.querySelectorAll('.square').forEach(square => {
+            square.addEventListener('mousedown', function(e) {
+                activeSquare = this;
+                offsetX = e.clientX - activeSquare.getBoundingClientRect().left;
+                offsetY = e.clientY - activeSquare.getBoundingClientRect().top;
+    
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', onMouseUp);
+            });
+        });
+    
+        // Перетягування
+        function onMouseMove(e) {
+            if (!activeSquare) return;
+    
+            const containerRect = container.getBoundingClientRect();
+            const squareRect = activeSquare.getBoundingClientRect();
+    
+            // Нові координати квадрата
+            let newLeft = e.clientX - containerRect.left - offsetX;
+            let newTop = e.clientY - containerRect.top - offsetY;
+    
+            // Обмеження для руху всередині контейнера
+            if (newLeft < 0) newLeft = 0;
+            if (newTop < 0) newTop = 0;
+            if (newLeft + (squareRect.width + 4) > containerRect.width) {
+                newLeft = containerRect.width - (squareRect.width + 4);
+            }
+            if (newTop + (squareRect.height + 4) > containerRect.height) {
+                newTop = containerRect.height - (squareRect.height + 4);
+            }
+    
+            activeSquare.style.left = newLeft + 'px';
+            activeSquare.style.top = newTop + 'px';
+        }
+    
+        // Завершення перетягування
+        function onMouseUp() {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+            activeSquare = null;
+        }
+    </script>
+</body>
+</html>

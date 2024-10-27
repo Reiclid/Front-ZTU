@@ -1,0 +1,63 @@
+.card-container {
+    perspective: 1000px;
+    display: inline-block;
+    margin: 10px;
+}
+
+.card {
+    width: 100px;
+    height: 150px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+    cursor: pointer;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border: 2px solid black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-family: 'Arial', sans-serif;
+}
+
+.card-back {
+    background-color: white;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150" preserveAspectRatio="none"><rect x="30" y="55" width="40" height="40" fill="transparent" stroke="black" stroke-width="1"> <animateTransform attributeName="transform" type="rotate" from="0 50 75" to="360 50 75" dur="4s" repeatCount="indefinite" /></rect> <rect x="20" y="45" width="60" height="60" fill="transparent" stroke="black" stroke-width="1"><animateTransform attributeName="transform" type="rotate" from="0 50 75" to="-360 50 75" dur="6s" repeatCount="indefinite" /></rect><rect x="25" y="50" width="50" height="50" fill="transparent" stroke="black" stroke-width="1"><animateTransform attributeName="transform" type="rotate" from="0 50 75" to="360 50 75" dur="9s" repeatCount="indefinite" /></rect></svg>');
+}
+
+.card-front {
+    background-color: white;
+    transform: rotateY(180deg);
+    font-size: 16px;
+    position: relative;
+    
+}
+
+.card-front::before,
+.card-front::after {
+    content: attr(data-value);
+    position: absolute;
+    font-size: 24px;
+}
+
+.card-front::before {
+    top: 5px;
+    left: 5px;
+}
+
+.card-front::after {
+    bottom: 5px;
+    right: 5px;
+    transform: rotate(180deg);
+}

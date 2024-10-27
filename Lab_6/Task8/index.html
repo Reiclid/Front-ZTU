@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Task8</title>
+</head>
+<body>
+    <h2>Список книг</h2>
+    <ul id="bookList">
+        <li>1 «Володар кілець» Джон Р. Р. Толкін</li>
+        <li>2 «Гордість і упередження» Джейн Остін</li>
+        <li>3 «Темні початки» Філіп Пулман</li>
+        <li>4 «Автостопом по галактиці» Дуглас Адамс</li>
+        <li>5 «Гаррі Поттер і Кубок вогню» Джоан Роулінг</li>
+        <li>6 «Вбити пересмішника» Харпер Лі</li>
+    </ul>
+
+    <script>
+        let selectedBook = null;
+
+        document.querySelectorAll('#bookList li').forEach(function(book) {
+            book.addEventListener('click', function() {
+                if (selectedBook) {
+                    selectedBook.classList.remove('selected');
+                }
+
+                book.classList.add('selected');
+                selectedBook = book;
+            });
+        });
+    </script>
+</body>
+</html>

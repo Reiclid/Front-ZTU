@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>task2</title>
+</head>
+<body>
+    <script>
+        const container = document.body;
+        const circles = [];
+        let activeIndex = 0;
+    
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    
+        function isOverlapping(newCircle, x, y, radius) {
+            for (let i = 0; i < circles.length; i++) {
+                const existingCircle = circles[i];
+                const rect = existingCircle.getBoundingClientRect();
+                const existingX = rect.left + radius;
+                const existingY = rect.top + radius;
+                const dist = Math.sqrt(Math.pow(existingX - (x + radius), 2) + Math.pow(existingY - (y + radius), 2));
+                if (dist < rect.width + radius) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function createCircle() {
+            const circle = document.createElement('div');
+            const radius = Math.floor(Math.random() * 21) + 10;
+            let x, y;
+
+            do {
+                x = Math.random() * (window.innerWidth - radius * 2);
+                y = Math.random() * (window.innerHeight - radius * 2);
+            } while (isOverlapping(circle, x, y, radius));
+
+            circle.style.width = circle.style.height = `${radius * 2}px`;
+            circle.style.backgroundColor = getRandomColor();
+            circle.style.left = `${x}px`;
+            circle.style.top = `${y}px`;
+            circle.classList.add('circle');
+            container.appendChild(circle);
+            circles.push(circle);
+        }
+    
+        for (let i = 0; i < 20; i++) {
+            createCircle();
+        }
+    
+        circles[0].classList.add('active');
+    
+        function setActiveCircle(index) {
+            circles[activeIndex].classList.remove('active');
+            activeIndex = index;
+            circles[activeIndex].classList.add('active');
+            circles[activeIndex].focus();
+        }
+    
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                let nextIndex = e.shiftKey ? activeIndex - 1 : activeIndex + 1;
+                if (nextIndex >= circles.length) nextIndex = 0;
+                if (nextIndex < 0) nextIndex = circles.length - 1;
+                setActiveCircle(nextIndex);
+            }
+    
+
+            const step = 10;
+            if (e.key === 'ArrowUp') {
+                moveCircle(0, -step);
+            } else if (e.key === 'ArrowDown') {
+                moveCircle(0, step);
+            } else if (e.key === 'ArrowLeft') {
+                moveCircle(-step, 0);
+            } else if (e.key === 'ArrowRight') {
+                moveCircle(step, 0);
+            }
+        });
+    
+
+        function moveCircle(dx, dy) {
+            const circle = circles[activeIndex];
+            const rect = circle.getBoundingClientRect();
+    
+            // Переміщуємо, але не виходимо за межі екрана
+            let newLeft = rect.left + dx;
+            let newTop = rect.top + dy;
+    
+            if (newLeft < 0) newLeft = 0;
+            if (newTop < 0) newTop = 0;
+            if (newLeft + rect.width > window.innerWidth) {
+                newLeft = window.innerWidth - rect.width;
+            }
+            if (newTop + rect.height > window.innerHeight) {
+                newTop = window.innerHeight - rect.height;
+            }
+    
+            circle.style.left = `${newLeft}px`;
+            circle.style.top = `${newTop}px`;
+        }
+    </script>                       
+</body>
+</html>

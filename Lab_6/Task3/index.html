@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Task3</title>
+</head>
+<body>
+    <h3>Choose colors from the palette:</h3>
+<div class="container">
+    <div class="palette">
+        <div class="color" style="background-color: red;" data-color="red"></div>
+        <div class="color" style="background-color: darkred;" data-color="darkred"></div>
+        <div class="color" style="background-color: yellow;" data-color="yellow"></div>
+        <div class="color" style="background-color: blue;" data-color="blue"></div>
+        <div class="color" style="background-color: green;" data-color="green"></div>
+        <div class="color" style="background-color: navy;" data-color="navy"></div>
+        <div class="color" style="background-color: cyan;" data-color="cyan"></div>
+        <div class="color" style="background-color: lime;" data-color="lime"></div>
+        <div class="color" style="background-color: orange;" data-color="orange"></div>
+    </div>
+    <div id="gradientBox"></div>
+</div>
+
+<script>
+    const colors = document.querySelectorAll('.color');
+    const gradientBox = document.getElementById('gradientBox');
+    let selectedColors = [];
+
+    colors.forEach(color => {
+        color.addEventListener('click', () => {
+            const colorValue = color.getAttribute('data-color');
+
+            if (color.classList.contains('selected')) {
+                // Знімаємо виділення кольору
+                color.classList.remove('selected');
+                selectedColors = selectedColors.filter(c => c !== colorValue);
+            } else {
+                // Додаємо колір до вибраних
+                color.classList.add('selected');
+                selectedColors.push(colorValue);
+            }
+
+            updateGradient();
+        });
+    });
+
+    function updateGradient() {
+        if (selectedColors.length === 0) {
+            gradientBox.style.background = 'white'; // Якщо немає вибраних кольорів
+        } else if (selectedColors.length === 1) {
+            gradientBox.style.background = selectedColors[0]; // Якщо вибрано один колір
+        } else {
+            // Створюємо градієнт для кількох кольорів
+            gradientBox.style.background = `linear-gradient(to bottom, ${selectedColors.join(', ')})`;
+        }
+    }
+</script>
+</body>
+</html>

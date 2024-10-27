@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Task5</title>
+</head>
+<body>
+    <h3>Select a color and click squares to fill:</h3>
+
+    <div class="palette">
+        <div class="color" style="background-color: red;" data-color="red"></div>
+        <div class="color" style="background-color: darkred;" data-color="darkred"></div>
+        <div class="color" style="background-color: yellow;" data-color="yellow"></div>
+        <div class="color" style="background-color: blue;" data-color="blue"></div>
+        <div class="color" style="background-color: green;" data-color="green"></div>
+        <div class="color" style="background-color: navy;" data-color="navy"></div>
+        <div class="color" style="background-color: cyan;" data-color="cyan"></div>
+        <div class="color" style="background-color: lime;" data-color="lime"></div>
+        <div class="color" style="background-color: orange;" data-color="orange"></div>
+    </div>
+    
+    <div class="grid" id="gridContainer"></div>
+
+<script>
+    let selectedColor = null;
+
+    // Вибір кольору з палітри
+    document.querySelectorAll('.color').forEach(colorDiv => {
+        colorDiv.addEventListener('click', function() {
+            document.querySelectorAll('.color').forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+            selectedColor = this.getAttribute('data-color');
+        });
+    });
+
+    // Створення сітки 10x10 квадратів
+    const gridContainer = document.getElementById('gridContainer');
+    for (let i = 0; i < 100; i++) {
+        const square = document.createElement('div');
+        square.classList.add('square');
+        square.addEventListener('click', function() {
+            if (selectedColor) {
+                this.style.backgroundColor = selectedColor;
+            }
+        });
+        gridContainer.appendChild(square);
+    }
+</script>
+</body>
+</html>

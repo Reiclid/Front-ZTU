@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Task4</title>
+</head>
+<body>
+    <h2>Selectable List</h2>
+    <ul id="itemList">
+        <li>Елемент 1</li>
+        <li>Елемент 2</li>
+        <li>Елемент 3</li>
+        <li>Елемент 4</li>
+        <li>Елемент 5</li>
+    </ul>
+
+    <script>
+        const items = document.querySelectorAll('#itemList li');
+
+        items.forEach(item => {
+            item.addEventListener('click', function(event) {
+                if (event.ctrlKey || event.metaKey) {
+                    item.classList.toggle('selected');
+                } else {
+                    items.forEach(i => i.classList.remove('selected'));
+                    item.classList.add('selected');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

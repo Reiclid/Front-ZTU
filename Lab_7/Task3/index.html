@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Task3</title>
+</head>
+<body>
+    <div id="container">
+        <button id="runawayButton">Натисни мене</button>
+    </div>
+    
+    <script>
+        const container = document.getElementById('container');
+        const button = document.getElementById('runawayButton');
+    
+        function getRandomPosition() {
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = button.getBoundingClientRect();
+    
+            const maxX = containerRect.width - (buttonRect.width + 4);
+            const maxY = containerRect.height - (buttonRect.height + 4);
+    
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+    
+            return { x: newX, y: newY };
+        }
+    
+        // Подія на наведенні миші на кнопку
+        button.addEventListener('mouseover', function() {
+            const newPosition = getRandomPosition();
+            button.style.left = `${newPosition.x}px`;
+            button.style.top = `${newPosition.y}px`;
+        });
+    </script>
+</body>
+</html>

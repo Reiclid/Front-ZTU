@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+
+li.selected {
+    background-color: #4CAF50; /* Виділений елемент - зелений фон */
+    color: white;
+}

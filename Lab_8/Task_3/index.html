@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Task3</title>
+</head>
+<body>
+    <div class="slideshow-container">
+        <img src="images/1.png" class="slide" id="slide">
+    </div>
+
+    <script>
+        const images = [
+            'images/1.png',
+            'images/2.png',
+            'images/3.png'
+        ];
+
+        let currentIndex = 0;
+        const slideElement = document.getElementById('slide');
+
+        function showNextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            slideElement.src = images[currentIndex];
+        }
+
+        setInterval(showNextImage, 3000);
+    </script>
+</body>
+</html>

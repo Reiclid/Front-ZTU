@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Task2</title>
+</head>
+<body>
+    <div class="timer-container">
+        <div class="timer" id="timer1">
+            <div class="time" id="time1">01:00:00</div>
+            <button onclick="startTimer(1)">Старт</button>
+            <button onclick="stopTimer(1)">Стоп</button>
+            <button onclick="resetTimer(1)">Скидання</button>
+        </div>
+        <div class="timer" id="timer2">
+            <div class="time" id="time2">00:30:00</div>
+            <button onclick="startTimer(2)">Старт</button>
+            <button onclick="stopTimer(2)">Стоп</button>
+            <button onclick="resetTimer(2)">Скидання</button>
+        </div>
+        <div class="timer" id="timer3">
+            <div class="time" id="time3">00:01:00</div>
+            <button onclick="startTimer(3)">Старт</button>
+            <button onclick="stopTimer(3)">Стоп</button>
+            <button onclick="resetTimer(3)">Скидання</button>
+        </div>
+    </div>
+
+
+    <script>
+        let timers = [
+            { hours: 1, minutes: 0, seconds: 0, interval: null, initialTime: "01:00:00" },
+            { hours: 0, minutes: 30, seconds: 0, interval: null, initialTime: "00:30:00" },
+            { hours: 0, minutes: 1, seconds: 0, interval: null, initialTime: "00:01:00" }
+        ];
+
+        function startTimer(timerIndex) {
+            if (timers[timerIndex - 1].interval) return;
+
+            timers[timerIndex - 1].interval = setInterval(() => {
+                let { hours, minutes, seconds } = timers[timerIndex - 1];
+
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        if (hours === 0) {
+                            stopTimer(timerIndex);
+                            return;
+                        } else {
+                            hours--;
+                            minutes = 59;
+                        }
+                    } else {
+                        minutes--;
+                    }
+                    seconds = 59;
+                } else {
+                    seconds--;
+                }
+
+                timers[timerIndex - 1].hours = hours;
+                timers[timerIndex - 1].minutes = minutes;
+                timers[timerIndex - 1].seconds = seconds;
+
+                updateDisplay(timerIndex, hours, minutes, seconds);
+            }, 1000);
+        }
+
+        function stopTimer(timerIndex) {
+            clearInterval(timers[timerIndex - 1].interval);
+            timers[timerIndex - 1].interval = null;
+        }
+
+        function resetTimer(timerIndex) {
+            stopTimer(timerIndex);
+            let initialTime = timers[timerIndex - 1].initialTime.split(":");
+            timers[timerIndex - 1].hours = parseInt(initialTime[0], 10);
+            timers[timerIndex - 1].minutes = parseInt(initialTime[1], 10);
+            timers[timerIndex - 1].seconds = parseInt(initialTime[2], 10);
+            updateDisplay(timerIndex, timers[timerIndex - 1].hours, timers[timerIndex - 1].minutes, timers[timerIndex - 1].seconds);
+        }
+
+        function updateDisplay(timerIndex, hours, minutes, seconds) {
+            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById(`time${timerIndex}`).textContent = timeString;
+        }
+    </script>
+</body>
+</html>

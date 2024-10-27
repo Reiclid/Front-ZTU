@@ -1,0 +1,20 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+.active {
+    box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.7); /* Візуальне виділення активного кружечка */
+}

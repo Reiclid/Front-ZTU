@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Task7</title>
+</head>
+<body>
+    <h2>Forum Messages</h2>
+
+    <div id="messageList">
+        <div class="message">
+            <div class="message-header">
+                <span>Ann</span>
+                <span>Wed Nov 02 2022 17:25</span>
+            </div>
+            <div class="message-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupi voluptas tempore dolor.
+            </div>
+        </div>
+    </div>
+
+    <h2>Add comment</h2>
+    <form id="messageForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="comment">Comment:</label>
+        <textarea id="comment" name="comment" rows="4" required></textarea>
+
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+
+        function formatDate(date) {
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+            const dayName = days[date.getDay()]; // День тижня
+            const monthName = months[date.getMonth()]; // Місяць
+            const day = String(date.getDate()).padStart(2, '0'); // День
+            const year = date.getFullYear(); // Рік
+            const hours = String(date.getHours()).padStart(2, '0'); // Години
+            const minutes = String(date.getMinutes()).padStart(2, '0'); // Хвилини
+    
+            return `${dayName} ${monthName} ${day} ${year} ${hours}:${minutes}`;
+        }
+    
+        // Обробка форми для додавання нового повідомлення
+        document.getElementById('messageForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Зупиняємо перезавантаження сторінки при натисканні "Send"
+    
+            const name = document.getElementById('name').value;
+            const comment = document.getElementById('comment').value;
+            const currentDateTime = formatDate(new Date()); // Форматування дати
+    
+            // Створення нового блоку з повідомленням
+            const newMessage = document.createElement('div');
+            newMessage.classList.add('message');
+    
+            const messageHeader = document.createElement('div');
+            messageHeader.classList.add('message-header');
+    
+            const nameElement = document.createElement('span');
+            nameElement.textContent = name;
+    
+            const dateElement = document.createElement('span');
+            dateElement.textContent = currentDateTime;
+    
+            const messageContent = document.createElement('div');
+            messageContent.classList.add('message-content');
+            messageContent.textContent = comment;
+    
+            messageHeader.appendChild(nameElement);
+            messageHeader.appendChild(dateElement);
+            newMessage.appendChild(messageHeader);
+            newMessage.appendChild(messageContent);
+    
+            const messageList = document.getElementById('messageList');
+            messageList.appendChild(newMessage);
+    
+            document.getElementById('messageForm').reset();
+        });
+    </script>
+</body>
+</html>

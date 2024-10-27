@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #ddd;
+            transition: background-color 0.3s;
+            width: 300px;
+            border-radius: 5px;
+        }
+        
+        label:hover {
+            background-color: #ccc;
+        }
+        
+        input[type="radio"]:checked + div {
+            max-height: 200px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+        }
+        
+        input[type="radio"] + div {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        label:has(input[type="radio"]:checked) {
+            background-color: #bbb;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+    <label>
+        <input type="radio" name="accordion" hidden>
+        Секція 1
+        <div>
+            <p>Вміст секції 1</p>
+        </div>
+    </label>
+
+    <label>
+        <input type="radio" name="accordion" hidden>
+        Секція 2
+        <div>
+            <p>Вміст секції 2</p>
+        </div>
+    </label>
+
+    <label>
+        <input type="radio" name="accordion" hidden>
+        Секція 3
+        <div>
+            <p>Вміст секції 3</p>
+        </div>
+    </label>
+
+</body>
+</html>

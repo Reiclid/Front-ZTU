@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Task4</title>
+</head>
+<body>
+    <div class="block" id="block1"></div>
+    <div class="block" id="block2"></div>
+    <div class="block" id="block3"></div>
+
+    <script>
+        const blocks = [
+        document.getElementById('block1'),
+        document.getElementById('block2'),
+        document.getElementById('block3')
+        ];
+
+        let blockData = blocks.map(() => {
+        return {
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            dx: (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 3 + 1),
+            dy: (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 3 + 1)
+        };
+        });
+
+        function moveBlocks() {
+        blocks.forEach((block, i) => {
+            blockData[i].x += blockData[i].dx;
+            blockData[i].y += blockData[i].dy;
+
+            if (blockData[i].x <= 0 || blockData[i].x + block.offsetWidth >= window.innerWidth) {
+                blockData[i].dx *= -1;
+            }
+            if (blockData[i].y <= 0 || blockData[i].y + block.offsetHeight >= window.innerHeight) {
+                blockData[i].dy *= -1;
+            }
+
+            block.style.transform = `translate(${blockData[i].x}px, ${blockData[i].y}px)`;
+        });
+
+        requestAnimationFrame(moveBlocks);
+        }
+
+        moveBlocks();
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Task2</title>
+</head>
+<body>
+    <h3>Enter binary matrix:</h3>
+    <textarea id="binaryInput" rows="4" cols="10"></textarea>
+    <button onclick="createGrid()">Create Grid</button>
+
+    <div id="gridContainer" class="grid"></div>
+
+    <script>
+        function createGrid() {
+            var input = document.getElementById('binaryInput').value;
+            var gridContainer = document.getElementById('gridContainer');
+
+            // Очищаємо попередню сітку
+            gridContainer.innerHTML = '';
+
+            // Розбиваємо введені дані на рядки
+            var rows = input.trim().split('\n');
+
+            // Створюємо сітку для кожного рядка
+            rows.forEach(function (row) {
+                var rowDiv = document.createElement('div');
+                rowDiv.classList.add('row');
+
+                for (var i = 0; i < row.length; i++) {
+                    var square = document.createElement('div');
+                    square.classList.add('square');
+
+                    // Визначаємо колір квадрата
+                    if (row[i] == '1') {
+                        square.classList.add('black');
+                    } else if (row[i] == '0') {
+                        square.classList.add('white');
+                    }
+
+                    rowDiv.appendChild(square);
+                }
+
+                gridContainer.appendChild(rowDiv);
+            });
+        }
+    </script>
+</body>
+</html>

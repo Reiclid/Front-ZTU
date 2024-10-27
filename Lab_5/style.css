@@ -1,0 +1,139 @@
+#emailOutput{
+    border: solid 1px;
+    min-height: 20px;
+    padding: 3px;
+}
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    width: 80%;
+    margin: 0 auto;
+}
+.active {
+    width: 100px;
+    filter: grayscale(0%);
+    opacity: 1;
+}
+.inactive {
+    width: 100px;
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+
+
+
+
+.section{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.section input, .section textarea {
+    outline: none;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 200px;
+    border: 2px solid gray;
+}
+.section > div{
+    border: solid 1px #0056b3;
+    padding: 10px 20px;
+}
+.highlight-div {
+    background-color: rgb(86, 124, 252);
+    border-color: blue;
+}
+
+
+.box-div{
+    overflow: hidden;
+    display: flex;
+}
+.controls {
+    margin-bottom: 10px;
+}
+.box {
+    margin: 50px;
+    width: 100px;
+    height: 100px;
+    background-color: #0056b3;
+    transition: transform 0.3s, width 0.3s, height 0.3s;
+}
+.label {
+    display: inline-block;
+    width: 60px;
+}
+.output {
+    width: 50px;
+    text-align: center;
+    display: inline-block;
+}
+
+
+#resizableImg{
+    width: 150px;
+    height: 150px;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 300px;
+}
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+.title {
+    font-size: 18px;
+    color: red;
+    margin-bottom: 10px;
+}
+
+
+
+
+.slider-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.slides img {
+    width: 300px;
+    height: 300px;
+}
+
+.prev, .next {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 255, 0.5);
+    color: white;
+    border: none;
+    padding:5px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}

@@ -1,0 +1,30 @@
+
+.palette {
+    display: grid;
+    grid-template-columns: repeat(3, 50px);
+    /* grid-gap: 5px; */
+}
+
+.color {
+    width: 50px;
+    height: 50px;
+    border: dotted 2px black;
+    cursor: pointer;
+}
+
+.color.selected {
+    z-index: 1;
+    border: 2px solid black;
+}
+
+#gradientBox {
+    width: 300px;
+    height: 150px;
+    margin-left: 20px;
+    border: 2px solid black;
+}
+
+.container {
+    display: flex;
+    justify-content: space-evenly;
+}

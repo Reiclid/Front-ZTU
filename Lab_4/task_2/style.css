@@ -1,0 +1,36 @@
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+form{
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    border: solid 2px rgba(0,0,0,1);
+    border-radius: 10px;
+    padding: 10px 15px;
+    background-color: rgb(216, 179, 211);
+}
+form *{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+form > *{
+    padding: 5px 0;
+}
+
+input{
+    outline: none;
+    border-radius: 5px;
+}
+input:invalid:not(:focus) {
+    border-color: #e74c3c;
+}
+
+.gender-div {
+    display: flex;
+    justify-content: flex-start;
+}

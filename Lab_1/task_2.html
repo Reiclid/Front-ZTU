@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма реєстрації</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        form {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        input {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 8px;
+            margin: 15px 0px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus {
+            border-color: #007bff;
+        }
+        
+        input:invalid:not(:focus) {
+            border-color: #e74c3c;
+        }
+        
+        input:valid {
+            border-color: #2ecc71;
+        }
+        
+        span {
+            display: none;
+            color: #e74c3c;
+            font-size: 12px;
+            position: absolute;
+            bottom: -2px;
+        }
+        
+        input:invalid:not(:focus) + span {
+            display: block;
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        
+        
+    </style>
+</head>
+<body>
+    <form>
+        <label>Ім'я
+            <input type="text" name="name" required placeholder="Введіть ваше ім'я">
+            <span>Введіть Ім'я</span>
+        </label>
+        <label>Електронна пошта
+            <input type="email" name="email" required placeholder="example@email.com">
+            <span>Введіть коректну адресу електронної пошти</span>
+        </label>
+        <label>Пароль
+            <input type="password" name="password" required placeholder="Введіть пароль">
+            <span>Введіть пароль</span>
+        </label>
+        <button type="submit">Зареєструватися</button>
+    </form>
+</body>
+</html>

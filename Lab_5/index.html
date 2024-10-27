@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Lab5</title>
+</head>
+<body>
+    <h3>Task 1: Виведення вибраних чекбоксів</h3>
+    <input type="checkbox" id="ukrainian" value="ua">Ukrainian<br>
+    <input type="checkbox" id="english" value="en">English<br>
+    <input type="checkbox" id="spanish" value="sp">Spanish<br>
+    <p id="output1"></p>
+    <button onclick="getSelectedCheckboxes()">OK</button>
+
+    <script>
+        function getSelectedCheckboxes() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const selected = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+            document.getElementById('output1').innerText = selected.join(', ');
+        }
+    </script>
+
+
+
+    <h3>Task 2: Вибір електронних адрес</h3>
+    <input type="checkbox" value="email1@example.com" onchange="updateEmails(this)"> email1@example.com<br>
+    <input type="checkbox" value="email2@example.com" onchange="updateEmails(this)"> email2@example.com<br>
+    <input type="checkbox" value="email3@example.com" onchange="updateEmails(this)"> email3@example.com<br>
+    <input type="checkbox" value="email4@example.com" onchange="updateEmails(this)"> email4@example.com<br>
+    <input type="checkbox" value="email5@example.com" onchange="updateEmails(this)"> email5@example.com<br>
+    <input type="checkbox" value="email6@example.com" onchange="updateEmails(this)"> email6@example.com<br>
+    <input type="checkbox" value="email7@example.com" onchange="updateEmails(this)"> email7@example.com<br>
+    <input type="checkbox" value="email8@example.com" onchange="updateEmails(this)"> email8@example.com<br>
+    <input type="checkbox" value="email9@example.com" onchange="updateEmails(this)"> email9@example.com<br>
+    <input type="checkbox" value="email10@example.com" onchange="updateEmails(this)"> email10@example.com<br>
+    <input type="checkbox" value="email11@example.com" onchange="updateEmails(this)"> email11@example.com<br>
+    <div id="emailOutput"></div>
+
+    <script>
+        const emailOutput = document.getElementById('emailOutput');
+        let selectedEmails = [];
+
+        function updateEmails(checkbox) {
+            if (checkbox.checked) {
+                selectedEmails.push(checkbox.value);
+            } else {
+                selectedEmails = selectedEmails.filter(email => email !== checkbox.value);
+            }
+            emailOutput.innerText = selectedEmails.join(', ');
+        }
+    </script>
+
+
+
+
+    <h3>Task 3: Таблиця множення (з радіокнопками)</h3>
+    <p id="score">Загальний рахунок: 0% (0 правильних відповідей з 0)</p>
+    <button onclick="nextTask()">Наступне завдання</button><br><br>
+
+    <p id="question"></p>
+    <form id="optionsForm"></form>
+    <p id="result"></p>
+
+    <script>
+        let correctAnswers = 0;
+        let totalQuestions = 0;
+
+        function generateTask() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            const correctAnswer = num1 * num2;
+
+            const wrongAnswers = [
+                correctAnswer + Math.floor(Math.random() * 5) + 1,
+                correctAnswer - Math.floor(Math.random() * 5) - 1,
+                correctAnswer + Math.floor(Math.random() * 10) + 1
+            ];
+
+            const allAnswers = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
+
+            document.getElementById('question').innerText = `${num1} × ${num2} =`;
+            
+            let form = document.getElementById('optionsForm');
+            form.innerHTML = '';
+            
+            allAnswers.forEach(answer => {
+                const option = document.createElement('input');
+                option.type = 'radio';
+                option.name = 'answer';
+                option.value = answer;
+                option.id = answer;
+                option.onclick = () => checkAnswer(correctAnswer, answer);
+                
+                const label = document.createElement('label');
+                label.htmlFor = answer;
+                label.innerText = answer;
+                
+                form.appendChild(option);
+                form.appendChild(label);
+                form.appendChild(document.createElement('br'));
+            });
+        }
+
+        function checkAnswer(correctAnswer, selectedAnswer) {
+            totalQuestions++;
+            if (selectedAnswer === correctAnswer) {
+                correctAnswers++;
+                document.getElementById('result').innerText = 'Правильно!';
+            } else {
+                document.getElementById('result').innerText = `Помилка, правильна відповідь «${correctAnswer}»`;
+            }
+            updateScore();
+            const options = document.getElementsByName('answer');
+            options.forEach(option => {
+                option.disabled = true;
+            });
+        }
+
+        function updateScore() {
+            const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+            document.getElementById('score').innerText = `Загальний рахунок: ${percentage}% (${correctAnswers} правильних відповідей з ${totalQuestions})`;
+        }
+
+        function nextTask() {
+            document.getElementById('result').innerText = '';
+            generateTask();
+        }
+
+        generateTask();
+    </script>
+
+
+
+    <h3>Task 4: Таблиця множення (з текстовим полем)</h3>
+    <p id="score2">Загальний рахунок: 0% (0 правильних відповідей з 0)</p>
+    <button onclick="nextTask2()">Наступне завдання</button><br><br>
+
+    <p id="taskQuestion2"></p>
+    <input type="text" id="answerInput2" placeholder="Введіть відповідь">
+    <button id="checkButton2" onclick="checkAnswer2()">Перевірити</button>
+    <p id="resultMessage2"></p>
+
+    <script>
+        let score2 = 0;
+        let totalQuestions2 = 0;
+        let correctAnswers2 = 0;
+
+        function generateTask2() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            document.getElementById('taskQuestion2').innerText = `${num1} × ${num2} =`;
+
+            document.getElementById('answerInput2').value = '';
+            document.getElementById('answerInput2').disabled = false;
+            document.getElementById('checkButton2').disabled = false;
+        }
+
+        function checkAnswer2() {
+            const expression = document.getElementById('taskQuestion2').innerText.replace('×', '*').replace('=', '').trim();
+            const correctAnswer = eval(expression);
+            const userAnswer = document.getElementById('answerInput2').value;
+
+            totalQuestions2++;
+
+            if (userAnswer == correctAnswer) {
+                correctAnswers2++;
+                document.getElementById('resultMessage2').innerText = 'Правильно!';
+            } else {
+                document.getElementById('resultMessage2').innerText = `Помилка, правильна відповідь «${correctAnswer}»`;
+            }
+
+            updateScore2();
+
+            document.getElementById('answerInput2').disabled = true;
+            document.getElementById('checkButton2').disabled = true;
+        }
+
+        function updateScore2() {
+            const percentage = Math.round((correctAnswers2 / totalQuestions2) * 100);
+            document.getElementById('score2').innerText = `Загальний рахунок: ${percentage}% (${correctAnswers2} правильних відповідей з ${totalQuestions2})`;
+        }
+
+        function nextTask2() {
+            document.getElementById('resultMessage2').innerText = '';
+            generateTask2();
+        }
+
+        generateTask2();
+    </script>
+
+
+
+    <h3>Task 5: Галерея зображень</h3>
+    <div class="gallery">
+        <img src="https://i.pinimg.com/236x/ed/94/cb/ed94cbea986e07e2d4c6d11fb614ceb9.jpg" class="inactive" onclick="toggleImage(this)">
+        <img src="https://i.pinimg.com/236x/db/da/58/dbda586b50a01a0f99fe29c5d065aa50.jpg" class="inactive" onclick="toggleImage(this)">
+        <img src="https://i.pinimg.com/474x/52/15/a0/5215a06840038e642f204d3e26d53dfb.jpg" class="inactive" onclick="toggleImage(this)">
+        <img src="https://i.pinimg.com/236x/ab/4e/0b/ab4e0bb438058ad80fa4539d72f52a92.jpg" class="inactive" onclick="toggleImage(this)">
+    
+        <img src="https://i.pinimg.com/236x/23/d4/bf/23d4bfb996b460dc032fbe413f1589aa.jpg" class="inactive" onclick="toggleImage(this)">
+        <img src="https://i.pinimg.com/236x/09/d4/4a/09d44ab98fbb4841299d51c0b95bac72.jpg" class="inactive" onclick="toggleImage(this)">
+        <img src="https://cs8.pikabu.ru/post_img/2018/02/19/10/151906309217261182.jpg" class="inactive" onclick="toggleImage(this)">
+        <img src="https://png.pngtree.com/thumb_back/fw800/background/20220428/pngtree-halloween-square-avatars-image_1106593.jpg" class="inactive" onclick="toggleImage(this)">
+    
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIEd0tsgjbIa7IgJ8Gh3-aSZJgCsPukAPm1Duv1gwubSvDigj5z_9kO2s3igJNaIGIs2Q&usqp=CAU" class="inactive" onclick="toggleImage(this)">
+        <img src="https://flomaster.top/uploads/posts/2023-01/thumbs/1673593117_flomaster-club-p-kvadratnie-risunki-krasivo-16.png" class="inactive" onclick="toggleImage(this)">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkFqGNpHZTJ_n4iDVvDmkX3kp41IKAOGXdhw&s" class="inactive" onclick="toggleImage(this)">
+        <img src="https://kartinki.pics/uploads/posts/2022-12/1671757789_kartinkin-net-p-krasivie-kvadratnie-kartinki-krasivo-3.jpg" class="inactive" onclick="toggleImage(this)">
+    </div>
+    
+
+    <script>
+        function toggleImage(img) {
+            if (img.classList.contains('inactive')) {
+                img.classList.remove('inactive');
+                img.classList.add('active');
+            } else {
+                img.classList.remove('active');
+                img.classList.add('inactive');
+            }
+        }
+    </script>
+
+
+    <h3>Task 6: Фокусування на секції</h3>
+    <div class="section">
+        <div class="login">
+            <input type="text" placeholder="login" onfocus="highlightInput(this)" onblur="removeHighlight(this)">
+        </div>
+        <div class="password">
+            <input type="password" placeholder="password" onfocus="highlightInput(this)" onblur="removeHighlight(this)">
+        </div>
+        <div class="description">
+            <textarea placeholder="description" onfocus="highlightInput(this)" onblur="removeHighlight(this)"></textarea>
+        </div>
+        
+    </div>
+    
+    <script>
+        function highlightInput(input) {
+            input.parentElement.classList.add('highlight-div');
+        }
+    
+        function removeHighlight(input) {
+            input.parentElement.classList.remove('highlight-div');
+        }
+    </script>
+
+
+
+
+    <h3>Task 7: Зміна розміру та повороту блока</h3>
+    <div class="box-div">
+        <div class="controls">
+            <div>
+                <span class="label">width: 0</span>
+                <input type="range" id="widthRange" min="0" max="300" value="100" oninput="updateBox()" />
+                <span class="output" id="widthOutput">100</span>
+            </div>
+            <div>
+                <span class="label">height: 0</span>
+                <input type="range" id="heightRange" min="0" max="300" value="100" oninput="updateBox()" />
+                <span class="output" id="heightOutput">100</span>
+            </div>
+            <div>
+                <span class="label">rotate: 0</span>
+                <input type="range" id="rotateRange" min="0" max="360" value="0" oninput="updateBox()" />
+                <span class="output" id="rotateOutput">0</span>
+            </div>
+            
+        </div>
+        <div class="box" id="box"></div>
+    </div>
+
+    <script>
+        function updateBox() {
+            const width = document.getElementById('widthRange').value;
+            const height = document.getElementById('heightRange').value;
+            const rotate = document.getElementById('rotateRange').value;
+    
+            document.getElementById('widthOutput').textContent = width;
+            document.getElementById('heightOutput').textContent = height;
+            document.getElementById('rotateOutput').textContent = rotate;
+    
+            const box = document.getElementById('box');
+            box.style.width = `${width}px`;
+            box.style.height = `${height}px`;
+            box.style.transform = `rotate(${rotate}deg)`;
+        }
+    
+        updateBox();
+    </script>
+
+
+
+
+
+    <h3>Task 8: Зміна розміру картинки</h3>
+    <img src="https://kartinki.pics/uploads/posts/2022-02/1645500476_1-kartinkin-net-p-kvadratnie-kartinki-1.jpg" id="resizableImg">
+    <button onclick="toggleImageSize()">Змінити розмір</button>
+
+    <script>
+        let isLarge = false;
+
+        function toggleImageSize() {
+            const img = document.getElementById('resizableImg');
+            img.style.transition = '1s'
+            if (isLarge) {
+                img.style.width = '150px';
+                img.style.height = '150px';
+            } else {
+                img.style.width = '300px';
+                img.style.height = '300px';
+            }
+            isLarge = !isLarge;
+        }
+    </script>
+
+
+
+
+
+    <h3>Task 9: Список товарів</h3>
+    <h3 class="title">Список товарів:</h3>
+    <table>
+        <tr>
+            <td>Брюки</td>
+            <td><button onclick="addToCart('Брюки')">Замовити</button></td>
+        </tr>
+        <tr>
+            <td>Сорочка</td>
+            <td><button onclick="addToCart('Сорочка')">Замовити</button></td>
+        </tr>
+        <tr>
+            <td>Шорти</td>
+            <td><button onclick="addToCart('Шорти')">Замовити</button></td>
+        </tr>
+        <tr>
+            <td>Туфлі</td>
+            <td><button onclick="addToCart('Туфлі')">Замовити</button></td>
+        </tr>
+    </table>
+
+    <h3 class="title">Кошик:</h3>
+    <table id="cartTable">
+        <tr>
+            <th>Товар</th>
+            <th>Кількість</th>
+        </tr>
+    </table>
+
+    <script>
+        let cart = {};
+
+        function addToCart(product) {
+            if (cart[product]) {
+                cart[product]++;
+            } else {
+                cart[product] = 1;
+            }
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartTable = document.getElementById('cartTable');
+
+            cartTable.innerHTML = `
+                <tr>
+                    <th>Товар</th>
+                    <th>Кількість</th>
+                </tr>
+            `;
+
+            for (let product in cart) {
+                const row = cartTable.insertRow();
+                const productCell = row.insertCell(0);
+                const quantityCell = row.insertCell(1);
+
+                productCell.innerText = product;
+                quantityCell.innerText = cart[product];
+            }
+        }
+    </script>
+
+
+
+
+
+
+    <h3>Task 10: Перегляд світлин</h3>
+    <div class="slider-container">
+        <div class="slides" id="slides">
+            <img src="https://i.pinimg.com/236x/ed/94/cb/ed94cbea986e07e2d4c6d11fb614ceb9.jpg" alt="Slide 1">
+            <img src="https://i.pinimg.com/236x/db/da/58/dbda586b50a01a0f99fe29c5d065aa50.jpg" alt="Slide 2">
+            <img src="https://i.pinimg.com/474x/52/15/a0/5215a06840038e642f204d3e26d53dfb.jpg" alt="Slide 3">
+            <img src="https://i.pinimg.com/236x/ab/4e/0b/ab4e0bb438058ad80fa4539d72f52a92.jpg" alt="Slide 4">
+        </div>
+    
+        <button class="prev" onclick="prevSlide()">&#10094;</button>
+        <button class="next" onclick="nextSlide()">&#10095;</button>
+    </div>
+    
+    <script>
+        let currentIndex = 0;
+    
+        function showSlide(index) {
+            const slides = document.getElementById('slides');
+            const totalSlides = slides.children.length;
+    
+            if (index >= totalSlides) {
+                currentIndex = 0;
+            } else if (index < 0) {
+                currentIndex = totalSlides - 1;
+            } else {
+                currentIndex = index;
+            }
+    
+            const offset = -currentIndex * 300;
+            slides.style.transform = `translateX(${offset}px)`;
+        }
+    
+        function nextSlide() {
+            showSlide(currentIndex + 1);
+        }
+    
+        function prevSlide() {
+            showSlide(currentIndex - 1);
+        }
+    
+        // Ініціалізація показу першого слайду
+        showSlide(currentIndex);
+    </script>
+
+</body>
+</html>
